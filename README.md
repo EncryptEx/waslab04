@@ -2,8 +2,8 @@
 
 Students:
 
-* Surname_1, First_name_1
+* López, Genís
 
-* Surname_2, First_name_2
+* López, Jaume
 
 Your deployed webapp at Render|Heroku|... (task #6): <https://*********.***.***/>
