@@ -1,5 +1,5 @@
 class TweetsController < ApplicationController
-  before_action :set_tweet, only: %i[ show edit update destroy ]
+  before_action :set_tweet, only: %i[ show edit update destroy like ]
 
   # GET /tweets
   def index
@@ -53,6 +53,12 @@ class TweetsController < ApplicationController
       @tweet.destroy!
       redirect_to tweets_path, notice: "Tweet was successfully destroyed.", status: :see_other
     end
+  end
+
+
+  def like
+    @tweet.increment!(:likes)
+    redirect_to root_path, status: :see_other
   end
 
   private
