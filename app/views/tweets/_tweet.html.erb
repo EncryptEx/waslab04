@@ -5,6 +5,11 @@
   </p>
 
   <p>
+    <strong>Created at: </strong>
+    <%= tweet.created_at.strftime("%A, %Y-%m-%d %H:%M")%>
+  </p>
+
+  <p>
     <strong>Content:</strong>
     <%= tweet.content %>
   </p>
