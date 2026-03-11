@@ -3,7 +3,11 @@
     <span class="numlikes" id="showLikes_<%= tweet.id %>"><%= tweet.likes || 0 %></span>
     <span class="smallfont">likes</span>
     <div class="button_to">
-      <%= button_to "like", like_tweet_path(tweet), method: :put %>
+      <% if session[:created_ids].include?(tweet.id) %>
+        <%= button_to "destroy", tweet_path(tweet), method: :delete, class: "btn-danger", data: { confirm: "Are you sure?" } %>
+      <% else %>
+        <%= button_to "like", like_tweet_path(tweet), method: :put %>
+      <% end %>
     </div>
   </div>
 
