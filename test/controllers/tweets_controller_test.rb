@@ -33,4 +33,15 @@ class TweetsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to tweets_url
   end
+
+  test "should destroy owned tweet" do
+    post tweets_url, params: { tweet: { author: "Owner", content: "Owned tweet" } }
+    owned_tweet = Tweet.order(:created_at).last
+
+    assert_difference("Tweet.count", -1) do
+      delete tweet_url(owned_tweet)
+    end
+
+    assert_redirected_to tweets_url
+  end
 end

@@ -11,17 +11,19 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :author, "Your name:", style: "display: block" %>
-    <%= form.text_field :author, placeholder: "Serious Contributor" %>
-  </div>
+  <div class="form-grid">
+    <div class="form-row">
+      <%= form.label :author, "Your name:" %>
+      <%= form.text_field :author, placeholder: "Serious Contributor" %>
+    </div>
 
-  <div>
-    <%= form.label :content, "Your Tweet:", style: "display: block" %>
-    <%= form.textarea :content, placeholder: "Share something concise and useful..." %>
-  </div>
+    <div class="form-row">
+      <%= form.label :content, "Your tweet:" %>
+      <%= form.textarea :content, placeholder: "Share something concise and useful..." %>
+    </div>
 
-  <div>
-    <%= form.submit %>
+    <div class="actions">
+      <%= form.submit "Tweet!" %>
+    </div>
   </div>
 <% end %>

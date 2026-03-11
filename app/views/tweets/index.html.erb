@@ -4,6 +4,20 @@
   <h1 class="wottitle">Wall of Tweets · RoR Edition</h1>
   <div class="subtitle">A minimal wall for quick thoughts. Clean and focused.</div>
 
+  <% if notice.present? %>
+    <div class="flash " id="notice">
+      <span class="ok"><%= notice %></span>
+      
+    </div>
+  <% end %>
+
+  <% if alert.present? %>
+    <div class="flash flash--alert" id="alert">
+      <span class="err"><%= alert %></span>
+      
+    </div>
+  <% end %>
+
   <div class="walltweet">
     <%= render "form", tweet: Tweet.new %>
   </div>
