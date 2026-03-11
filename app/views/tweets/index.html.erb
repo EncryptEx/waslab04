@@ -1,17 +1,43 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Tweets" %>
 
-<h1>Tweets</h1>
+<div class="container">
+  <h1 class="wottitle">Wall of Tweets · RoR Edition</h1>
+  <div class="subtitle">A minimal wall for quick thoughts. Clean and focused.</div>
 
-<div id="tweets">
+  <% if notice.present? %>
+    <div class="flash " id="notice">
+      <span class="ok"><%= notice %></span>
+      
+    </div>
+  <% end %>
+
+  <% error_message = @tweet&.errors&.any? ? @tweet.errors.full_messages.to_sentence : alert %>
+
+  <% if error_message.present? %>
+    <div class="flash flash--alert" id="notice">
+      
+      <span class="err"><%= error_message %></span>
+    </div>
+  <% end %>
+
+  <div class="walltweet">
+    <%= render "form", tweet: (@tweet || Tweet.new) %>
+  </div>
+
+  <% current_date = nil %>
+
   <% @tweets.each do |tweet| %>
+
+    <% tweet_date = tweet.created_at.to_date %>
+
+    <% if current_date != tweet_date %>
+      <% current_date = tweet_date %>
+      <div class="date-sep">
+        <%= tweet.created_at.strftime("%A, %B %-d, %Y") %>
+      </div>
+    <% end %>
+
     <%= render tweet %>
-    <p>
-      <%= link_to "Show this tweet", tweet %>
-    </p>
-    <hr>
+
   <% end %>
 </div>
-
-<%= link_to "New tweet", new_tweet_path %>

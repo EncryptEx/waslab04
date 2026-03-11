@@ -1,10 +1,228 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+/* ----- Base (Notion-like: calm, airy, readable) ----- */
+:root{
+  --bg: #fbfbfb;
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --accent: #4f7cac;
+  --accent-ink: #ffffff;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(0,0,0,.04), 0 6px 20px rgba(0,0,0,.04);
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg: #0b0e14;
+    --card: #0f131b;
+    --text: #e5e7eb;
+    --muted: #98a2b3;
+    --line: #1f2937;
+    --accent: #3b82f6;
+    --accent-ink: #0b0e14;
+    --success: #22c55e;
+    --danger: #f87171;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.35);
+  }
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Inter, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ----- Layout ----- */
+.container{
+  max-width: 860px;
+  margin: 48px auto 80px;
+  padding: 0 20px;
+}
+
+/* ----- Header ----- */
+.wottitle{
+  margin: 0 0 18px;
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.subtitle{
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* ----- Flash (notice / alert) ----- */
+.flash{
+  display:flex; gap:12px; align-items:center;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--success);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  box-shadow: var(--shadow);
+  margin: 18px 0 8px;
+  font-size: 14px;
+}
+.flash--alert{ border-left-color: var(--danger); }
+.flash .ok{ color: var(--success); font-weight: 600; }
+.flash .err{ color: var(--danger); font-weight: 600; }
+
+/* ----- Composer (form) ----- */
+.walltweet{
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+  margin: 20px 0 28px;
+}
+.form-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.form-row{ display: grid; gap: 6px; }
+label{
+  font-size: 13px; color: var(--muted);
+}
+input[type="text"], textarea{
+  width: 100%;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: inherit;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+textarea{ resize: vertical; min-height: 72px; }
+input[type="text"]:focus, textarea:focus{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 20%, transparent);
+}
+
+/* Submit button (works with Rails `button_to` and `form.submit`) */
+button, input[type="submit"] {
+  appearance: none;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform .02s ease, filter .15s ease, background .15s ease, color .15s ease;
+  min-width: 90px;   /* ensures same size */
+  text-align: center;
+}
+button:hover, input[type="submit"]:hover{ filter: brightness(1.02) }
+button:active, input[type="submit"]:active{ transform: translateY(1px) }
+
+/* Secondary (for "destroy") */
+.btn-secondary{
+  border-color: var(--line);
+  background: transparent;
+  color: var(--text);
+}
+.btn-secondary:hover{
+  background: color-mix(in oklab, var(--line) 50%, transparent);
+}
+
+/* Rails `button_to` renders a form; align inline */
+.button_to{
+  display:inline-block;
+}
+.button_to form, .button_to{
+  margin:0;
+}
+
+/* ----- Date separator ----- */
+.date-sep{
+  display:flex; align-items:center; gap:12px;
+  margin: 24px 0 10px;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.date-sep::before, .date-sep::after{
+  content:"";
+  height:1px; flex:1; background: var(--line);
+}
+
+/* ----- Tweet item ----- */
+.wotitem{
+  display:grid;
+  grid-template-columns: 92px 1fr;
+  gap: 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  margin: 12px 0;
+}
+@media (max-width: 560px){
+  .wotitem{ grid-template-columns: 1fr; }
+}
+
+.likes{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap: 8px;
+  padding: 8px;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+}
+.numlikes{
+  font-size: 28px; font-weight: 700;
+  line-height: 1;
+}
+.smallfont{
+  font-size: 12px; color: var(--muted);
+}
+
+.item h4{
+  margin: 0 0 6px;
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.item p{
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.7;
+  white-space: pre-wrap; /* keep newlines from textarea */
+  word-wrap: break-word;
+}
+
+/* Subtle link reset if any links appear in content later */
+.item a{ color: var(--accent); text-decoration: none; }
+.item a:hover{ text-decoration: underline; }
+
+/* Fine-tune spacing below the composer submit row */
+.actions{
+  display:flex; justify-content:flex-end; gap:8px; margin-top:2px;
+}
+
+/* Danger (for destructive actions like delete) */
+.btn-danger {
+  border-color: var(--danger);
+  background: var(--danger);
+  color: var(--accent-ink);
+}
+.btn-danger:hover {
+  filter: brightness(1.05);
+}
