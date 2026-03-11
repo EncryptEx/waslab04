@@ -18,6 +18,14 @@ class TweetsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to tweets_url
   end
 
+  test "should render validation errors on index" do
+    post tweets_url, params: { tweet: { author: "abc", content: "abc" } }
+
+    assert_response :unprocessable_content
+    assert_match "Author is too short (minimum is 4 characters) and Content is too short (minimum is 4 characters)", response.body
+    assert_match 'class="flash flash--alert"', response.body
+  end
+
   test "should like tweet" do
     assert_difference("@tweet.reload.likes.to_i", 1) do
       put like_tweet_url(@tweet)

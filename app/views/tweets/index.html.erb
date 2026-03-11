@@ -11,15 +11,17 @@
     </div>
   <% end %>
 
-  <% if alert.present? %>
-    <div class="flash flash--alert" id="alert">
-      <span class="err"><%= alert %></span>
+  <% error_message = @tweet&.errors&.any? ? @tweet.errors.full_messages.to_sentence : alert %>
+
+  <% if error_message.present? %>
+    <div class="flash flash--alert" id="notice">
       
+      <span class="err"><%= error_message %></span>
     </div>
   <% end %>
 
   <div class="walltweet">
-    <%= render "form", tweet: Tweet.new %>
+    <%= render "form", tweet: (@tweet || Tweet.new) %>
   </div>
 
   <% current_date = nil %>
