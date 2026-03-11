@@ -30,6 +30,7 @@ class TweetsController < ApplicationController
       redirect_to tweets_path, alert: "You are not allowed to delete this tweet", status: :see_other
     else
       @tweet.destroy!
+      session[:created_ids] = created_ids - [@tweet.id.to_s]
       redirect_to tweets_path, notice: "Tweet was successfully destroyed.", status: :see_other
     end
   end
